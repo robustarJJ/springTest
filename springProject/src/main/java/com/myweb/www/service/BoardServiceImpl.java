@@ -73,8 +73,9 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int insert(BoardDTO bdto) {	
 		//제목 공백 등록 막기
-		if(bdto.getBvo().getTitle()=="") {
-			return 0;
+		if(bdto.getBvo().getTitle().equals("")) {
+			log.info(">>>>>>>>>>");
+			return 2;
 		}else {
 			
 			// bvo, flist 가져와서 각자 db에 저장

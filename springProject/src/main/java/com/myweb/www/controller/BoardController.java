@@ -1,6 +1,6 @@
 package com.myweb.www.controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -72,10 +72,16 @@ public class BoardController {
 		if(files[0].getSize() > 0) {
 			flist = fh.uploadFiles(files);
 		}
-		
 		int isUp = bsv.insert(new BoardDTO(bvo, flist));
-		re.addFlashAttribute("isUp", isUp);
-		return "redirect:/board/list";	
+		
+		log.info(">>>>>>>>> isUp >> "+isUp);
+		if(isUp==2) {
+			re.addFlashAttribute("isUp", isUp);
+			return "redirect:/board/register";
+		}else {
+			re.addFlashAttribute("isUp", isUp);
+			return "redirect:/board/list";	
+			}
 		}		
 	
 	

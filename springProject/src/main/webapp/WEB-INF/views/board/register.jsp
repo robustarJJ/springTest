@@ -37,8 +37,9 @@
 </div>
 
 	<script type="text/javascript">
-		const isOk = `<c:out value="${isOk}"></c:out>`
-		if(isOk=="2"){
+		const isUp = `<c:out value="${isUp}"></c:out>`
+		console.log("isUP"+isUp);
+		if(isUp=="2"){
 			alert('제목을 입력해 주세요.');
 		}
 	</script>
