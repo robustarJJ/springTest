@@ -121,5 +121,8 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
+	public void test() {
+		
+	}
 	
 }
