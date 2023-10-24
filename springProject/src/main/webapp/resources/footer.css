@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+#wrapper{
+	min-height: 100%;
+	position: relative;
+}
+footer{
+	bottom: 0px;
+	position: absolute;
+	height: 10rem;
+	background: yellow;
+}
+
