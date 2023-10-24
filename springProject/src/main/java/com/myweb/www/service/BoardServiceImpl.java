@@ -71,20 +71,31 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int insert(BoardDTO bdto) {
-		// bvo, flist 가져와서 각자 db에 저장
-		//기존 메서드 활용
-		int isUp = bdao.insert(bdto.getBvo()); //bno 등록
-		
-		//bvo insert 후 파일도 있다면...
-		if(isUp > 0 && bdto.getFlist().size() > 0) {
-			long bno = bdao.selectOneBno(); //가장 마지막에 등록된 bno
-			//모든 파일에 bno set
-			for(FileVO fvo : bdto.getFlist()) {
-				fvo.setBno(bno);
-				isUp*= fdao.insertFile(fvo);
+	public int insert(BoardDTO bdto) {	
+		//제목 공백 등록 막기
+		if(bdto.getBvo().getTitle()=="") {
+			return 0;
+		}else {
+			
+			// bvo, flist 가져와서 각자 db에 저장
+			//기존 메서드 활용
+			int isUp = bdao.insert(bdto.getBvo()); //bno 등록
+			//null처리
+			if(bdto.getFlist()==null) {
+				isUp*=1;
+				return isUp;
 			}
+			//bvo insert 후 파일도 있다면...
+			if(isUp > 0 && bdto.getFlist().size() > 0) {
+				long bno = bdao.selectOneBno(); //가장 마지막에 등록된 bno
+				//모든 파일에 bno set
+				for(FileVO fvo : bdto.getFlist()) {
+					fvo.setBno(bno);
+					isUp*= fdao.insertFile(fvo);
+				}
+			}
+			return isUp;
 		}
-		return isUp;
+	
 	}
 }

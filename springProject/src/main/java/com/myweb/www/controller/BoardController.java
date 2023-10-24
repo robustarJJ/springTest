@@ -1,5 +1,6 @@
 package com.myweb.www.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -121,8 +122,5 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	public void test() {
-		
-	}
 	
 }

@@ -9,7 +9,7 @@
   	values(#{title}, #{writer}, #{content})
   </insert>
   
-  <select id="selectOneBno" resultType="int">
+  <select id="selectOneBno" resultType="long">
     select max(bno) from board;
   </select>
   
