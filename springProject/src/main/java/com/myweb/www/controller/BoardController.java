@@ -5,9 +5,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -105,17 +109,34 @@ public class BoardController {
 		m.addAttribute("ph",ph);
 	}
 	
-	
-	
 	@GetMapping({"/detail","/modify"})
 	public void detail(Model m, @RequestParam("bno")int bno) {
-		BoardVO bvo = bsv.getDetail(bno);
-		m.addAttribute("bvo", bvo);
+		BoardDTO bdto = bsv.getDetail(bno);
+		m.addAttribute("bdto",bdto);
 	}
 	
+//	@PostMapping("/modify")
+//	public String modify(BoardVO bvo) {
+//		int isOk = bsv.modify(bvo);
+//		log.info(">>> board modify >> "+(isOk>0? "Ok" :"Fail"));
+//		return "redirect:/board/detail?bno="+bvo.getBno();
+//	}
+	
 	@PostMapping("/modify")
-	public String modify(BoardVO bvo) {
-		int isOk = bsv.modify(bvo);
+	public String modify(BoardVO bvo, RedirectAttributes reAttr,
+			@RequestParam(name="files", required = false)MultipartFile[] files) {
+		log.info(">>> modify bvo >> "+bvo);
+		log.info(">>> modify files >> "+files);
+		
+		List<FileVO> flist = null;
+		if(files[0].getSize() > 0) {
+			//기존 파일은 이미 DB에 등록완료. 삭제할 파일은 비동기로 이미 삭제 완료.
+			//새로 추가할 파일만 추가
+			//file이 존재함.
+			flist = fh.uploadFiles(files); //fvo 구성 List로 리턴
+		}
+		BoardDTO bdto = new BoardDTO(bvo, flist);
+		int isOk = bsv.modifyFile(bdto);
 		log.info(">>> board modify >> "+(isOk>0? "Ok" :"Fail"));
 		return "redirect:/board/detail?bno="+bvo.getBno();
 	}
@@ -126,6 +147,14 @@ public class BoardController {
 		log.info(">>> board remove >> "+(isOk>0? "Ok" :"Fail"));
 		reAttr.addFlashAttribute("isOk",isOk);
 		return "redirect:/board/list";
+	}
+	
+	@DeleteMapping(value = "/file/{uuid}")
+	public ResponseEntity<String> removeFile(@PathVariable("uuid") String uuid){
+		log.info(">>>> uuid >>"+uuid);
+		int isOk = bsv.removeFile(uuid);
+		return isOk > 0? new ResponseEntity<String>("1", HttpStatus.OK)
+				: new ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	

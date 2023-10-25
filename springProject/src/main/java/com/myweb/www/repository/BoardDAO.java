@@ -29,4 +29,6 @@ public interface BoardDAO {
 
 	long selectOneBno();
 
+	int modifyFile(BoardVO bvo);
+
 }

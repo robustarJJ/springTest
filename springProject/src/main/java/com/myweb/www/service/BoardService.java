@@ -12,7 +12,7 @@ public interface BoardService {
 
 	List<BoardVO> getList(PagingVO pagingVO);
 
-	BoardVO getDetail(long bno);
+	BoardDTO getDetail(long bno);
 
 	int modify(BoardVO bvo);
 
@@ -21,5 +21,9 @@ public interface BoardService {
 	int getTotalCount(PagingVO pagingVO);
 
 	int insert(BoardDTO boardDTO);
+
+	int removeFile(String uuid);
+
+	int modifyFile(BoardDTO bdto);
 
 }

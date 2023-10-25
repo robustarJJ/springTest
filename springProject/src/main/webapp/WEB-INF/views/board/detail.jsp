@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,11 +11,13 @@
 	.cmtQty{ color: red; }
 	.cmtCon{ width: 70% }
 	.noneCmt{ list-style: none; opacity: 0.5; }
+	ul{list-style: none; padding-left:0px;}
 </style>
 </head>
 <body>
 <jsp:include page="../common/header.jsp"></jsp:include>
 <jsp:include page="../common/nav.jsp" />
+<c:set value="${bdto.bvo }" var="bvo"></c:set>
 <div class="container">
 <br>
 <h2>Detail Page</h2>
@@ -33,7 +36,27 @@
 	</tr>	
 	<tr>
 		<th>내용</th>
-		<td>${bvo.content }</td>
+		<td>${bvo.content }
+			<div>
+				<!-- 파일표시란 -->
+				<c:set value="${bdto.flist }" var="flist"></c:set>
+				<ul class="list-group list-group-flush">
+					<c:forEach items="${flist }" var="fvo">
+						<li>
+							<c:choose>
+								<c:when test="${fvo.fileType > 0 }">
+									<div>
+										<img alt="그림없음" src="/upload/${fn: replace(fvo.saveDir,'\\','/')}/${fvo.uuid}_${fvo.fileName}">
+									</div>
+								</c:when>
+							</c:choose>
+						</li>
+					</c:forEach>
+				</ul>
+			</div>
+		
+		
+		</td>
 	</tr>
 	<tr>
 		<th>작성일</th>
@@ -44,6 +67,41 @@
 		<td>${bvo.readCount }</td>
 	</tr>	
 </table>
+<br>
+<!-- file 표시 영역 -->
+<div>
+	<ul class="list-group">
+		<!-- 파일 개수만큼 li를 추가하여 파일을 표시, 타입이 1(이미지파일)일 경우만 표시 -->
+		<!-- li 
+			 div=>img 그림표시
+			 div=>div 파일이름, 작성일자 span 크기 설정 -->
+			 
+			 <!-- 하나의 파일만 따와서 fvo로 저장 -->
+			 <c:forEach items="${flist }" var="fvo">
+				 <li class="list-group-item d-flex justify-content-between align-items-center">
+				 	<c:choose>
+				 		<c:when test="${fvo.fileType > 0 }">
+				 			<div>
+				 			<!-- /upload/year/month/day/uuid_th_file_name -->
+				 				<img alt="그림이 없음." src="/upload/${fn: replace(fvo.saveDir,'\\','/')}/${fvo.uuid}_th_${fvo.fileName}">
+				 			</div>
+				 		</c:when>
+				 		<c:otherwise>
+				 			<div>
+				 				<!-- file 아이콘 같은 모양 값으로 넣을 수 있음. -->
+				 			</div>
+				 		</c:otherwise>
+				 	</c:choose>
+				 	<div>
+				 		<div>${fvo.fileName }</div>
+				 		${fvo.regDate }
+				 	</div>
+				 	<span class="badge bg-primary rounded-pill">${fvo.fileSize }Byte</span>
+				 </li>
+			 </c:forEach>
+	</ul>
+</div>
+
 <br>
 
 <a href="/board/modify?bno=${bvo.bno }">

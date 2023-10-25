@@ -9,4 +9,12 @@
   	values(#{uuid},#{saveDir},#{fileName},#{fileType},#{bno},#{fileSize})
   </insert>
   
+  <select id="getFileList" resultType="com.myweb.www.domain.FileVO">
+  	select * from file where bno = #{bno} order by reg_date asc
+  </select>
+  
+  <delete id="removeFile">
+  	delete from file where uuid =#{uuid}
+  </delete>
+  
   </mapper>

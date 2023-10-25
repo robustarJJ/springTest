@@ -67,14 +67,17 @@ function getCommentList(bno, page=1){ //무조건 처음 뿌릴때는 첫 페이
         console.log(result); //ph 객체 pgvo, totalCount, cmtList
         const ul = document.getElementById('cmtListArea');
         const divCmt = document.getElementById('cmtCount');
+        
         if(result.cmtList.length > 0){
             //다시 댓글을 뿌릴 때 기존 값 삭제, 1page일 경우만
             if(page==1){
                 ul.innerHTML = "";
             }
+
             console.log(result.cmtList.length);
             let cmtQty = `<div id="cmtCount">Comment(<span class="cmtQty">${result.cmtList.length}</span>)</div>`;
             divCmt.innerHTML = cmtQty;
+
             for(let cvo of result.cmtList){
                 let str=`<li class="list-group-item" data-cno="${cvo.cno}">`;
                 str+=`<div class="mb-3">`;

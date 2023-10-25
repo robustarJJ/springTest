@@ -44,11 +44,13 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public BoardVO getDetail(long bno) {
+	public BoardDTO getDetail(long bno) {
 		log.info(">>> list detail serviceImpl");
 		bdao.readCount(bno,1);
 		bdao.detailCmtQty(bno);
-		return bdao.getDetail(bno);
+		//파일 list 가져온 다음 BoardDTO로 만들어 리턴
+		BoardDTO bdto = new BoardDTO(bdao.getDetail(bno),fdao.getFileList(bno) );
+		return bdto;
 	}
 
 	@Override
@@ -98,5 +100,31 @@ public class BoardServiceImpl implements BoardService{
 			return isUp;
 		}
 	
+	}
+
+	@Override
+	public int removeFile(String uuid) {
+		log.info(">>>>> removeFile serviceImpl >>");
+		return fdao.removeFile(uuid);
+	}
+
+	@Override
+	public int modifyFile(BoardDTO bdto) {
+		log.info("file modifyFile check 2");
+		bdao.readCount(bdto.getBvo().getBno(), -2);
+		int isOk = bdao.modifyFile(bdto.getBvo()); //기존 bvo update
+		if(bdto.getFlist()==null) {
+			isOk *=1;
+		}else {
+			if(isOk > 0 && bdto.getFlist().size() > 0) {
+				long bno = bdto.getBvo().getBno();
+				//모든 fvo에 bno set
+				for(FileVO fvo : bdto.getFlist()) {
+					fvo.setBno(bno);
+					isOk *=fdao.insertFile(fvo);
+				}
+			}
+		}
+		return isOk;
 	}
 }

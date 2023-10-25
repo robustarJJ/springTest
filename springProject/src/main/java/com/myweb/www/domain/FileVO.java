@@ -19,7 +19,7 @@ public class FileVO {
 	private int fileType;
 	private long bno;
 	private long fileSize;
-	private String regAt;
+	private String regDate;
 	
 	
 	
