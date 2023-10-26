@@ -6,7 +6,7 @@ document.getElementById('trigger').addEventListener('click',()=>{
 
 //실행파일, 이미지 파일에 대한 정규 표현식 작성
 const regExp = new RegExp("\.(exe|sh|bat|js|msi|dll)$"); //실행파일 막기
-const regExpImg = new RegExp("\.(jpg|jpeg|png|gif)$"); //이미지 파일만
+const regExpImg = new RegExp("\.(JPG|jpg|jpeg|JPEG|PNG|png|GIF|gif)$"); //이미지 파일만
 const maxSize = 1024*1024*20; //파일 최대 사이즈
 
 function fileValidation(fileName, fileSize){

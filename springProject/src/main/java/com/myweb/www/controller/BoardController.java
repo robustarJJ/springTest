@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,8 +66,7 @@ public class BoardController {
 //		
 //	}
 	
-	
-	
+
 	@PostMapping("/register")
 	public String registerPost(BoardVO bvo, RedirectAttributes re,
 			@RequestParam(name="files", required=false)MultipartFile[] files) {
@@ -138,6 +138,7 @@ public class BoardController {
 		BoardDTO bdto = new BoardDTO(bvo, flist);
 		int isOk = bsv.modifyFile(bdto);
 		log.info(">>> board modify >> "+(isOk>0? "Ok" :"Fail"));
+		reAttr.addFlashAttribute("isOk",isOk);
 		return "redirect:/board/detail?bno="+bvo.getBno();
 	}
 	

@@ -31,4 +31,6 @@ public interface BoardDAO {
 
 	int modifyFile(BoardVO bvo);
 
+	void fileCmtQty();
+
 }

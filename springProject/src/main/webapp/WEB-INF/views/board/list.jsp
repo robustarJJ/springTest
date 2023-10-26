@@ -92,11 +92,18 @@
 	
 </div>
 
-	
 	<script type="text/javascript">
+	// 게시글 삭제 시 -> return "redirect:/board/list";
 		const isOk = `<c:out value="${isOk}"></c:out>`
 		if(isOk==1){
 			alert('게시글을 삭제 하였습니다.');
+		}
+	
+	// 게시글 등록 시 -> 
+		const isUp = `<c:out value="${isUp}"></c:out>`
+		console.log("isUP"+isUp);
+		if(isUp=="1"){
+			alert('게시글을 등록 하였습니다.');
 		}
 	</script>
 	

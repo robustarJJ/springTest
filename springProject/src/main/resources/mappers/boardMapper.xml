@@ -47,6 +47,10 @@
   	update board set cmt_qty = (select count(cno) from comment where bno = #{bno})
   </update>
   
+  <update id="fileCmtQty">
+  	update board set has_file = (select count(bno) from file where bno = board.bno)
+  </update>
+  
   <update id="modifyFile" parameterType="com.myweb.www.domain.BoardVO">
   	update board set title = #{title}, content = #{content} where bno = #{bno}
   </update>

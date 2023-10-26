@@ -127,6 +127,7 @@
 </div>
 	<script type="text/javascript" src="/resources/js/boardModify.js"></script>
 	<script type="text/javascript" src="/resources/js/boardRegister.js"></script>
+	
 	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

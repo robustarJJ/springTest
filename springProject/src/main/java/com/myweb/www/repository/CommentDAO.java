@@ -21,4 +21,6 @@ public interface CommentDAO {
 
 	List<CommentVO> selectListPaging(@Param("bno") long bno, @Param("pgvo") PagingVO pgvo);
 
+	void deleteAllCmt(long bno);
+
 }

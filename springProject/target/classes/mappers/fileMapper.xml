@@ -17,4 +17,12 @@
   	delete from file where uuid =#{uuid}
   </delete>
   
+  <delete id="deleteAllFile">
+  	delete from file where bno=#{bno}
+  </delete>
+  
+  <select id="selectListAllFiles" resultType="com.myweb.www.domain.FileVO">
+  	select * from file
+  </select>
+  
   </mapper>

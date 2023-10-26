@@ -26,6 +26,10 @@
   	delete from comment where cno=#{cno}
   </delete>
   
+  <delete id="deleteAllCmt">
+  	delete from comment where bno=#{bno}
+  </delete>
+  
   <update id="edit">
   	update comment set content=#{content}, mod_at = now() where cno=#{cno}
   </update>

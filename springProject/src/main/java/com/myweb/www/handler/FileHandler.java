@@ -27,7 +27,7 @@ public class FileHandler {
 		//날짜를 폴더로 생성하여 그날그날 업로드 파일을 관리
 		LocalDate date = LocalDate.now(); //localDate 객체
 		String today = date.toString(); //2023-10-24
-		today = today.replace("_", File.separator); //2023\10\24(window)  2023/10/24
+		today = today.replace("-", File.separator); //2023\10\24(window)  2023/10/24
 		
 		//D:\\_myweb\\_java\\fileUpload\\2023\\10\24
 		File folders = new File(UP_DIR, today);

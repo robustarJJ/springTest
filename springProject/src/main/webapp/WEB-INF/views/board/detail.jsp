@@ -199,9 +199,14 @@
 <script type="text/javascript">
 	getCommentList(bnoVal)
 </script>
+<!-- 게시글 수정 시 -> return "redirect:/board/detail?bno="+bvo.getBno(); -->
+	<script type="text/javascript">
+		const isOk = `<c:out value="${isOk}"></c:out>`
+		if(isOk==1){
+			alert('게시글이 수정 되었습니다.');
+		}
+	</script>	
 
-
-
-	<jsp:include page="../common/footer.jsp" />	
+<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

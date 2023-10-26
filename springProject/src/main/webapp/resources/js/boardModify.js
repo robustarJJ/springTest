@@ -21,23 +21,33 @@ document.addEventListener('click',(e)=>{
         e.target.closest('li').remove(); //li삭제
        // location.reload(); //새로고침
 
-        document.addEventListener('click',(e)=>{
-            if(e.target.classList.contains('regBtn')){
-                removeFileToServer(uuid).then(result=>{
-                    if(result==1){
-                        alert('파일삭제 성공~!!');
-                        console.log("파일삭제");
-                    }else{
-                        alert('파일삭제 실패!');
-                    }
+       document.getElementById('regBtn').addEventListener('click',()=>{
+        console.log('>> uuid >>> '+uuid);
+        removeFileToServer(uuid).then(result=>{
+            if(result==1){
+                console.log("파일삭제 성공");
+            }else{
+                console.log("파일삭제 실패");
+                }
 
-                })
-            }
-        })
+            })
+        });
+       
     } 
 })
         
-    
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
