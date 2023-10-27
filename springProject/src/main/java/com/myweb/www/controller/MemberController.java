@@ -34,4 +34,12 @@ public class MemberController {
 		int isOk = msv.register(mvo);
 		return "index";
 	}
+	
+	@GetMapping("/login")
+	public String login() {
+		
+		return "/member/login";
+	}
+	
+	
 }
