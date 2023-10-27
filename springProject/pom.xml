@@ -172,6 +172,7 @@
 		
 		
 		
+		
 		<!-- Hikaricp 5.0.1 -->
 		<dependency>
 		   <groupId>com.zaxxer</groupId>
@@ -180,6 +181,7 @@
 		</dependency>
 
 
+		
 		
 		<!-- util json file -->
 		<!-- 댓글관련JSON -->
@@ -196,6 +198,8 @@
 			<artifactId>jackson-dataformat-xml</artifactId>
 			<version>2.13.0</version>
 		</dependency>
+		
+		
 		
 		<!-- 파일 업로드 관련 -->
 		<!--commons - fileupload 1.4 추가 -->
@@ -217,6 +221,8 @@
 			<artifactId>thumbnailator</artifactId>
 			<version>0.4.14</version>
 		</dependency>
+		
+		
 		
 		<!-- 티카 -->
 		<dependency>
@@ -273,6 +279,17 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>5.5.3</version>
 		</dependency>
+		      
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-taglibs</artifactId>
+		    <version>5.5.3</version>
+		</dependency>
+		      
+		      
+		      
+		      
 		      
 	</dependencies>
     <build>
