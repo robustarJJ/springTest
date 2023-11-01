@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+    <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +21,14 @@
 <jsp:include page="../common/header.jsp"></jsp:include>
 <jsp:include page="../common/nav.jsp" />
 <c:set value="${bdto.bvo }" var="bvo"></c:set>
+
+<sec:authorize access="isAuthenticated()"><!-- <=비회원으로 접속시 아래코드 사용x -->
+<sec:authentication property="principal.mvo.email" var="authEmail"/>
+<sec:authentication property="principal.mvo.nickName" var="authNickName"/>
+<sec:authentication property="principal.mvo.authList" var="authList"/>
+
+</sec:authorize>
+
 <div class="container">
 <br>
 <h2>Detail Page</h2>
@@ -103,49 +114,51 @@
 </div>
 
 <br>
-
-<a href="/board/modify?bno=${bvo.bno }">
-	<button type="button" class="btn btn-dark">수정하기</button>
-</a>
-<a href="/board/remove?bno=${bvo.bno }">
-	<button type="button" class="btn btn-danger">삭제하기</button>
-</a>
-<a href="/">
-	<button type="button" class="btn btn-light">HOME</button>
-</a>
-<a href="/board/list">
-	<button type="button" class="btn btn-light">LIST</button>
-</a>
-<c:if test="${ses.id ne null && ses.id == bvo.writer || ses.id=='admin'}">
-</c:if>
-<c:if test="${ses.id ne null && ses.id == bvo.writer || ses.id=='admin'}">
-</c:if>
+	
+	<c:set var="authValue" value="${authList }"/>
+	<c:if test="${(authNickName ne null && authNickName==bvo.writer)}">
+		<a href="/board/modify?bno=${bvo.bno }">
+			<button type="button" class="btn btn-dark">수정하기</button>
+		</a>
+		<a href="/board/remove?bno=${bvo.bno }">
+			<button type="button" class="btn btn-danger">삭제하기</button>
+		</a>
+	</c:if>
+		<a href="/">
+			<button type="button" class="btn btn-light">HOME</button>
+		</a>
+		<a href="/board/list">
+			<button type="button" class="btn btn-light">LIST</button>
+		</a>
 </div>
 <br><br><br>
 
 
 
-<!-- 댓글 라인 -->
+
+<!-- 댓글 라인 등록 라인 -->
 <div class="container">
 	<!-- 댓글카운트 -->
 	<div id="cmtCount">
 		Comment(<span class="cmtQty">${bvo.cmtQty}</span>)
 	</div>
 
+<sec:authorize access="isAuthenticated()"> <!-- 비회원댓글작성막기 -->
 	<div class="cmtCon">
 		<div class="input-group mb-3">
-		  <span class="input-group-text" id="cmtWriter">Writer</span>
+		  <span class="input-group-text" id="cmtWriter">${authNickName }</span>
 		  <input type="text" class="form-control input" placeholder="댓글을 등록해 주세요" id="cmtText">
 		  <button type="button" class="btn btn-secondary" id="cmtPostBtn">Post</button>
 		</div>
 	</div>
+</sec:authorize>
 
 
 <!-- 댓글 표시 라인 -->
 	<ul class="list-group list-group-flush" id="cmtListArea">
 	  <li class="list-group-item">
 	  	<div class="mb-3">
-	  	<span class="fw-bold">Writer</span>
+	  	<span class="fw-bold">${authNickName }</span>
 	  	<span class="badge text-bg-secondary">modAt</span>
 	  		<div>Content</div>
 	  	</div>
@@ -169,7 +182,7 @@
     <div class="modal-content">
     
       <div class="modal-header">
-        <h5 class="modal-title">Wirter</h5>
+        <h5 class="modal-title">${authNickName }</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       
@@ -195,17 +208,34 @@
 	let bnoVal = `<c:out value="${bvo.bno}" />`;
 	console.log(bnoVal);
 </script>
-<script type="text/javascript"  src="/resources/js/boardComment.js"></script>
+
+<script type="text/javascript"  src="/resources/js/boardComment.js">
+</script>
+
 <script type="text/javascript">
 	getCommentList(bnoVal)
 </script>
+
 <!-- 게시글 수정 시 -> return "redirect:/board/detail?bno="+bvo.getBno(); -->
-	<script type="text/javascript">
+<script type="text/javascript">
 		const isOk = `<c:out value="${isOk}"></c:out>`
 		if(isOk==1){
 			alert('게시글이 수정 되었습니다.');
 		}
-	</script>	
+</script>	
+
+<script type="text/javascript">
+	const authEmail = `${authEmail}`;
+	const authNickName = `${authNickName}`;
+	const auth = `${authList}`;
+			console.log(auth.substr(auth.lastIndexOf("=")+1, 10));
+			console.log(typeof auth);
+	let admin = auth.substr(auth.lastIndexOf("=")+1, 10);
+	if(admin == 'ROLE_ADMIN'){
+	console.log(authNickName+' 권한: '+admin);
+	}
+</script>
+
 
 <jsp:include page="../common/footer.jsp" />
 </body>

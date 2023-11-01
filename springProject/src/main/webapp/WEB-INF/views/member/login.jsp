@@ -26,7 +26,22 @@ form{display: flex; justify-content: center;}
 	  <label for="p" class="form-label">pwd</label>
 	  <input type="password" class="form-control" name="pwd" id="p">
 	</div>
-
+	
+	<c:if test="${not empty param.errMsg }">
+		<div class="text-danger mb-3">
+			<c:choose>
+				<c:when test="${param.errMsg eq 'Bad credentials' }">
+					<c:set var="errText" value="이메일 또는 비밀번호가 일치하지 않습니다." />
+				</c:when>
+				<c:otherwise>
+					<c:set var="errText" value="로그인 에러. 관리자에게 문의하세요." />
+				</c:otherwise>
+			</c:choose>
+			
+			${errText}
+		</div>
+	</c:if>
+	
 	<div>
 	<button type="submit" class="btn btn-dark" id="login">LOGIN</button>
 </div>

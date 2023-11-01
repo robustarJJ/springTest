@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,7 @@
 <jsp:include page="../common/header.jsp" />
 <jsp:include page="../common/nav.jsp" />
 <div class="container">
+<sec:authentication property="principal.mvo.nickName" var="authNickName"/>
 <form action="/board/register" method="post" enctype="multipart/form-data">
 <div class="mb-3">
   <label for="exampleFormControlInput1" class="form-label">Title</label>
@@ -18,7 +20,7 @@
 </div>
 <div class="mb-3">
   <label for="exampleFormControlInput1" class="form-label">Writer</label>
-  <input type="text" class="form-control" name="writer" id="exampleFormControlInput1" placeholder="writer">
+  <input type="text" class="form-control" name="writer" id="exampleFormControlInput1" value="${authNickName }" readonly="readonly">
 </div>
 <div class="mb-3">
   <label for="exampleFormControlTextarea1" class="form-label">Content</label>

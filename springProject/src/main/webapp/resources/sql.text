@@ -51,7 +51,7 @@ pwd varchar(1000) not null,
 nick_name varchar(100) not null,
 reg_at datetime default now(),
 last_login datetime default null,
-primary key(email));
+);
 
 create table auth_member(
 email varchar(100) not null,
@@ -60,3 +60,9 @@ primary key(email));
 
 alter table auth_member add constraint fk_auth
 foreign key(email) references member(email);
+
+--2023-10-30--
+auth_member 프라이머리키 삭제함
+alter table auth_member drop primary key;
+
+insert into auth_member values('bbb@naver.com','ROLE_ADMIN');

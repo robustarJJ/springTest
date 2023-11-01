@@ -28,7 +28,7 @@
 	</div>
 
 	<div>
-	<button type="submit" class="btn btn-dark" id="regBtn">회원가입완료</button>
+	<button type="submit" class="btn btn-dark" id="regBtn">SinUp</button>
 </div>
 </form>
 </div>

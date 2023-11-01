@@ -64,6 +64,7 @@ async function spreadCommentListFromServer(bno, page){
 
 function getCommentList(bno, page=1){ //무조건 처음 뿌릴때는 첫 페이지 값을 뿌려야함.
     spreadCommentListFromServer(bno, page).then(result=>{
+        
         console.log(result); //ph 객체 pgvo, totalCount, cmtList
         const ul = document.getElementById('cmtListArea');
         const divCmt = document.getElementById('cmtCount');
@@ -84,8 +85,10 @@ function getCommentList(bno, page=1){ //무조건 처음 뿌릴때는 첫 페이
                 str+=`<span class="fw-bold">${cvo.writer}  </span>`;
                 str+=`<span class="badge text-bg-secondary">${cvo.modAt}</span>`;
                 str+=`<div>${cvo.content}</div></div>`;
-                str+=`<button type="button" class="btn btn-outline-primary mod" data-bs-toggle="modal" data-bs-target="#myModal">%</button>`;
-                str+=`<button type="button" class="btn btn-outline-secondary cmtDelBtn del">X</button>`;
+                if((cvo.writer==authNickName && authNickName!="") || admin=='ROLE_ADMIN'){
+                    str+=`<button type="button" class="btn btn-outline-primary mod" data-bs-toggle="modal" data-bs-target="#myModal">%</button>`;
+                    str+=`<button type="button" class="btn btn-outline-secondary cmtDelBtn del">X</button>`;
+                }
                 str+=`</li>`;
                 ul.innerHTML += str;
             }

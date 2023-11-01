@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.successHandler(authSuccessHandler())
 		.failureHandler(authFailureHandler());
 		
-		//로그아웃 페이지
+		//로그아웃 페이지, 반드시 method="post"
 		http.logout()
 		.logoutUrl("/member/logout")
 		.invalidateHttpSession(true)
